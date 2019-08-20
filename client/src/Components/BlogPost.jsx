@@ -89,13 +89,20 @@ class BlogPost extends Component {
               <hr className="title-hr" />
               <div className="content-wrapper">
                 <div
-                  className="content"
+                  className="blog-content"
                   dangerouslySetInnerHTML={sanitize(newContent)}
                 />
                 <p>
                   tags:{" "}
                   {this.state.tags.map(tag => (
-                    <span className="badge badge-danger post-tag">{tag}</span>
+                    <span className="badge badge-danger post-tag">
+                      <a
+                        className="post-tag-text"
+                        href={"http://localhost:3000/blog?q=" + tag}
+                      >
+                        {tag}
+                      </a>
+                    </span>
                   ))}
                 </p>
               </div>

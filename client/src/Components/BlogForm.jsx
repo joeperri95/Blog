@@ -3,11 +3,12 @@ import React, { Component } from "react";
 class BlogForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { title: "", content: "", tags: [], id: 0 };
+    this.state = { title: "", content: "", description: "", tags: [], id: 0 };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleContentChange = this.handleContentChange.bind(this);
     this.handleTagChange = this.handleTagChange.bind(this);
+    this.handleDescChange = this.handleDescChange.bind(this);
   }
 
   handleSubmit = event => {
@@ -39,7 +40,8 @@ class BlogForm extends Component {
             body: JSON.stringify({
               title: this.state.title,
               content: this.state.content,
-              tags: this.state.tags
+              tags: this.state.tags,
+              description: this.state.description
             })
           });
         });
@@ -58,43 +60,91 @@ class BlogForm extends Component {
 
   handleTagChange = event => {
     this.setState({ tags: event.target.value });
+    event.preventDefault();
+  };
+
+  handleDescChange = event => {
+    this.setState({ description: event.target.value });
+    event.preventDefault();
   };
 
   render() {
     return (
       <React.Fragment>
         <div>
-          <form onSubmit={this.handleSubmit}>
-            <div id="top-row">
-              <h2 id="blog-icon">Create New Blog Post</h2>
-              <textarea
-                className="title-textarea"
-                rows="1"
-                maxLength="200"
-                required
-                onChange={this.handleTitleChange}
-                placeholder="Title"
-              />
-              <textarea
-                className="tags-textarea"
-                onChange={this.handleTagChange}
-                placeholder="Comma separated tags"
-                rows="1"
-                maxLength="200"
-              />
-              <button className="btn btn-primary submit-button">Submit</button>
-            </div>
-            <br />
-            <div>
-              <textarea
-                className="content-textarea"
-                required
-                onChange={this.handleContentChange}
-                placeholder="Blog contents"
-                rows="50"
-              />
-            </div>
-          </form>
+          <div className="title-section">
+            <h1>Create New Blog Post</h1>
+          </div>
+          <div className="form-container">
+            <form onSubmit={this.handleSubmit}>
+              <div className="row">
+                <label className="label" for="title-input">
+                  Title:
+                </label>
+                <div className="content">
+                  <input
+                    id="title-input"
+                    className="form-input"
+                    rows="1"
+                    maxLength="200"
+                    required
+                    onChange={this.handleTitleChange}
+                    placeholder="Title"
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <label className="label" for="description-input">
+                  Description:
+                </label>
+                <div className="content">
+                  <input
+                    id="description-input"
+                    className="form-input"
+                    maxLength="200"
+                    required
+                    onChange={this.handleDescChange}
+                    placeholder="Enter a short description"
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <label className="label" for="tags-input">
+                  Tags:
+                </label>
+                <div className="content">
+                  <input
+                    id="tags-input"
+                    className="form-input"
+                    onChange={this.handleTagChange}
+                    placeholder="Comma Separated Tags"
+                    maxLength="200"
+                  />
+                </div>
+              </div>
+              <div className="row ">
+                <h2 className="title-section">Enter blog contents below</h2>
+              </div>
+              <div className="">
+                <textarea
+                  id="blog-textarea"
+                  required
+                  onChange={this.handleContentChange}
+                  placeholder="Blog contents"
+                  rows="50"
+                />
+              </div>
+
+              <div className="row">
+                <label id="preview-label" className="">
+                  <b>Preview and submit post</b>
+                </label>
+                <button className="btn btn-primary submit-button">
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </React.Fragment>
     );

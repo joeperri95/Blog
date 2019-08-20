@@ -23,6 +23,7 @@ class BlogModel(mongoengine.Document):
     title = mongoengine.StringField(required=True, max_length=200)
     content = mongoengine.StringField(required=True)
     blogID = mongoengine.IntField(required=True, unique=True)
+    description = mongoengine.StringField(required=True, max_length=200)
     tags = mongoengine.ListField(mongoengine.StringField())
     published = mongoengine.StringField(
         default=datetime.datetime.today().strftime("%B %d %Y"))
@@ -55,6 +56,7 @@ class BlogPost(flask_restful.Resource):
         # remove empty tags
         taglist = [x for x in taglist if x.strip(" ") != ""]
 
+        print(resp)
         # maybe should put this in put
         if(exist.count() > 0):
             # should only be one blog per ID
@@ -63,12 +65,13 @@ class BlogPost(flask_restful.Resource):
             posting.title = resp['title']
             posting.content = resp['content']
             posting.blogID = blogID
+            posting.description = resp['description']
             posting.published = datetime.datetime.today().strftime("%B %d %Y")
             posting.tags = taglist
 
         else:
             posting = BlogModel(
-                resp['title'], resp['content'], blogID, taglist)
+                resp['title'], resp['content'], blogID, resp['description'], taglist)
 
         posting.save()
 
@@ -106,7 +109,7 @@ class BlogList(flask_restful.Resource):
         postList = []
 
         for post in postings:
-            postList.append({'content': post.content, 'title': post.title,
+            postList.append({'content': post.description, 'title': post.title,
                              'blogID': post.blogID, 'published': post.published, 'tags': post.tags})
 
         resp = {'posts': postList}
