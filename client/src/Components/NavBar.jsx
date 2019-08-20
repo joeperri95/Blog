@@ -11,11 +11,14 @@ class NavBar extends Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        ayy: "lmao"
+      }
+    })
+      .then(response => {
+        return response.text();
       })
-    });
+      .then(data => {
+        alert(data);
+      });
   }
 
   render() {
