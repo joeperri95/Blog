@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Provider } from "react-redux";
 import BlogForm from "./Components/BlogForm";
 import BlogPosts from "./Components/BlogPosts";
 import NavBar from "./Components/NavBar";
