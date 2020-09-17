@@ -2,6 +2,8 @@
 
 This is a project I created while practicing web development
 
+Eventually this will serve as my personal blog
+
 ## Skills
 
 - ReactJS

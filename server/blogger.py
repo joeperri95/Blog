@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.6
+#!/usr/bin/env python3.8
 
 import mongoengine
 import flask
@@ -9,7 +9,8 @@ import datetime
 from flask_jwt_extended import (
     JWTManager, jwt_required, create_access_token, get_jwt_identity)
 
-mongoengine.connect('mongoengine_test', host='localhost', port=27017)
+
+mongoengine.connect('mongo_test', host='172.17.0.2', port=27017)
 
 app = flask.Flask(__name__)
 app.config['JWT_SECRET_KEY'] = 'super-secret'
@@ -141,13 +142,9 @@ api.add_resource(Login, '/login')
 api.add_resource(Tags, '/tags')
 
 
-def clear():
-    for x in BlogModel.objects:
-        x.delete()
-
-
 if __name__ == '__main__':
 
-    clear()
+    print('running')
+    # clear()
     app.run(debug=True, port=5002)
     mongoengine.disconnect('mongoengine_test')
